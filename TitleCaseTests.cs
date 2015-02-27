@@ -42,50 +42,61 @@ namespace TitleCaseProblem
       Assert.AreEqual("Why Does a Bird Fly?", result);
     }
 
+    [TestMethod]
+    public void Corner1()
+    {
+      var result = TitleCase("aT");
+      Assert.AreEqual("At", result);
+    }
+
+    [TestMethod]
+    public void Corner2()
+    {
+      var result = TitleCase("");
+      Assert.AreEqual("", result);
+    }
+
     private List<string> lowerList = new List<string>
-    { "a", "the", "to", "at", "in", "with", "and", "but", "or" };
+    {
+      "a",
+      "the",
+      "to",
+      "at",
+      "in",
+      "with",
+      "and",
+      "but",
+      "or"
+      };
+
 
     public string TitleCase(string title)
     {
-      // Split the title string by spaces
+      if (string.InNullEmpty(title))
+      return string.Empty;
+
+      title = title.ToLower();
       var words = title.Split(' ');
 
-      // Capitalize word[0]
       words[0] = Capitalize(words[0]);
 
-      // Capitalize word[last]
       words[words.Length - 1] = Capitalize(words[words.Length - 1]);
-      // For each word from word[1] to word[last-1]
-      for (int i = 1; i < words.Length - 1; i++)
+
+      for (int i = 0; i < words.Length; i++)
       {
-        // If list contains the word
-        if(lowerList.Contains(words[i].ToLower()))
-          // Lowercase word
-          words[i] = Lowercase(words[i]);
-        // Else
-        else
-          // Capitalize word
-          words[i] = Capitalize(words[i]);
+
+        if(i == 0 || i = words.Length - 1 || !lowerList.Contains(words[i]))
+              words[i] = Capitalize(words[i]);
        }
-      // Combine words into sentece
       return string.join(" ", words);
     }
 
-    // Capitalize word
     public string Capitalize(string word)
     {
-      // Lowercase word
-      word = Lowercase(word);
-      // Capitalize word[0]
+
       word = char.ToUpper(word[0]) + word.Substring(1);
       return word;
     }
-    // Lowercase word
-    public string Lowercase(string word)
-    {
-      // foreach letter in word
-      // Lowercase letter
-      return word.ToLower();
-    }
+
   }
 }
